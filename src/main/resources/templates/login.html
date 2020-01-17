@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/login" method="post">
+    userName: <input type="text" name="userName"/>
+    passWord: <input type="password" name="passWord"/>
+    verifyCode:<input type="text" name="verifyCode"/>
+
+    <img alt="单击图片刷新！"  th:src="@{/common/kaptcha}"
+         onclick="this.src='/common/kaptcha?d='+new Date()*1">
+    <input type="submit" value="submit">
+    <a href="/common/register">register</a>
+</form>
+
+
+
+</body>
+</html>
