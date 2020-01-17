@@ -20,6 +20,8 @@ public class blogCommonConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(userLoginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login")
-                .excludePathPatterns("/common/**");
+                .excludePathPatterns("/common/**")
+                .excludePathPatterns("/dist/**")
+                .excludePathPatterns("/plugins/**");
     }
 }

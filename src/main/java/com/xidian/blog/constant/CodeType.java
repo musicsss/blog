@@ -12,7 +12,7 @@ public enum CodeType {
      */
     SUCCESS_STATUS(0, "成功"),
     PHONE_EXIST(903, "手机号存在"),
-    USER_NULL(000,"用户不存在"),
+    USER_NULL(006,"用户不存在"),
     PASSWORD_ERROR(001,"密码错误"),
     USERNAME_IS_NULL(002,"用户名为空"),
     PASSWORD_IS_NULL(003,"密码为空"),

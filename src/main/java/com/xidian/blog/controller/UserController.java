@@ -103,4 +103,10 @@ public class UserController {
             return JsonResult.fail().toJSON();
         }
     }
+
+
+    @GetMapping("/common/forgetPassword")
+    String forgetPassWord(){
+        return "forgetPassWord";
+    }
 }
