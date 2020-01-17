@@ -42,6 +42,7 @@ public class CaptchaController {
         httpServletResponse.setDateHeader("Expires", 0);
         httpServletResponse.setContentType("image/jpeg");
         ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
+        System.out.println(captchaOutputStream.toString());
         responseOutputStream.write(captchaOutputStream);
         responseOutputStream.flush();
         responseOutputStream.close();

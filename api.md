@@ -14,12 +14,7 @@
 ```JSON
 {
   "status":1,
-  "message":"success",
-  "data":"{'userName':'user',
-  'gender':1,
-  'birthday':'1999-01-01',
-  'phone':'12345678901'
-  }"
+  "message":"success"
 }
 ```
 ###增加用户
@@ -36,7 +31,7 @@
 "birthday":"2019-01-01",
 "email":"110@gmail.com",
 "personnalBrief":"个人简介",
-"avatarImgUrl":"loclahost:8080/img/xiaozhang.jpg",
+"avatarImgUrl":"loclahost:8080/img/xiaozhang.jpg"
 }
 ```
 
@@ -44,7 +39,7 @@
 ```JSON
 {
 "status":1,
-"message":"success",
+"message":"success"
 }
 ```
 
@@ -63,7 +58,7 @@
 "birthday":"2019-01-01",
 "email":"110@gmail.com",
  "personnalBrief":"个人简介",
- "avatarImgUrl":"loclahost:8080/img/xiaozhang.jpg",
+ "avatarImgUrl":"loclahost:8080/img/xiaozhang.jpg"
  }
 ```
 
@@ -71,7 +66,7 @@
 ```JSON
 {
 "status":1,
-"message":"success",
+"message":"success"
 }
 ```
 
@@ -81,9 +76,9 @@
 * REQUEST:
 ```JSON
 {
-"userName":"user"
-"orderSort":1
-"listIndex":1
+"userName":"user",
+"orderSort":1,
+"listIndex":1,
 "pageNum":1
 }
 ```
@@ -91,8 +86,8 @@
 * RESPONSE:
 ```JSON
 {
-"status":1
-"message":"success"
+"status":1,
+"message":"success",
 "data":[
 {"title":"firstAticle","author":"小明","articleCategory":"日常",
 "createTime":"2019-12-12 14:59:00",
