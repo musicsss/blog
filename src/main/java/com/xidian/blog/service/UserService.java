@@ -22,4 +22,12 @@ public interface UserService {
 
 
     boolean register(UserEntity userEntity);
+
+    void addFriend(String friendName, String masterUser);
+
+    DataMap findFriend(String friendName, String masterUser);
+
+    DataMap<UserEntity> findUserByEmailAddress(String emailAddress);
+
+    DataMap findUserByUserName(String userName);
 }

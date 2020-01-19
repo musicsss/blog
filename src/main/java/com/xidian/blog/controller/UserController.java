@@ -3,8 +3,11 @@ package com.xidian.blog.controller;
 import com.xidian.blog.constant.CodeType;
 import com.xidian.blog.entity.UserEntity;
 import com.xidian.blog.service.UserService;
+import com.xidian.blog.service.VerifyService;
 import com.xidian.blog.utils.DataMap;
 import com.xidian.blog.utils.JsonResult;
+import com.xidian.blog.utils.JsonUtils;
+import com.xidian.blog.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author 米
@@ -22,8 +26,16 @@ import java.io.IOException;
 @Controller
 public class UserController {
 
+
+    private UserService userService;
+
+    private VerifyService verifyService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService,VerifyService verifyService){
+        this.userService = userService;
+        this.verifyService = verifyService;
+    }
 
     @RequestMapping("/index")
     public String index(HttpSession httpSession){
@@ -40,27 +52,27 @@ public class UserController {
     public String register(){
         return "/register";
     }
-
+    /**
+     *@Description: 用户信息注册
+     *@Param: Map<String,Object> request 请求json数据
+     *@Return: String json 返回json数据
+     */
     @PostMapping("/common/register")
-    public String register(@RequestParam("userName") String userName,
-                           @RequestParam("passWord") String passWord,
-                           @RequestParam("phone") String phone){
+    @ResponseBody
+    public String register(@RequestBody Map<String,Object> request){
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserName(userName);
-        userEntity.setPassWord(passWord);
-        userEntity.setPhone(phone);
-
+        userEntity.setUserName(request.get("userName").toString());
+        userEntity.setPassWord(request.get("passWord").toString());
+        userEntity.setEmail(request.get("emailAddress").toString());
 
         System.out.println(userEntity.toString());
+
         boolean result = userService.register(userEntity);
         if(result){
-            return "/login";
+            return ResponseUtil.send(CodeType.SUCCESS_STATUS).toJSON();
         }else{
-            return "/error";
+            return ResponseUtil.send(CodeType.USER_IS_EXIST).toJSON();
         }
-
-
-
     }
 
 
@@ -108,5 +120,77 @@ public class UserController {
     @GetMapping("/common/forgetPassword")
     String forgetPassWord(){
         return "forgetPassWord";
+    }
+
+    @PostMapping("/common/forgetPassWord")
+    @ResponseBody
+    public String forgetPassWord(@RequestBody Map<String , Object> request,HttpSession session){
+
+        String code = request.get("verifyCode").toString();
+        DataMap dataMap = userService.findUserByEmailAddress(request.get("emailAddress").toString());
+        System.out.println(code);
+        UserEntity userEntity = (UserEntity)dataMap.getData();
+        System.out.println(userEntity);
+        String userName = userEntity.getUserName();
+        session.setAttribute("forgetUserName",userEntity.getUserName());
+        DataMap dataMap1 = verifyService.checkVerify(userName,code);
+        return JsonResult.build(dataMap1).toJSON();
+
+    }
+
+    @RequestMapping("/user/loginByEmail")
+    @ResponseBody
+    public String loginByEmail(@RequestBody Map<String,Object> request,HttpSession session){
+        UserEntity userEntity = new UserEntity();
+        userEntity.setPassWord(request.get("passWord").toString());
+        userEntity.setEmail(request.get("emailAddress").toString());
+        String verifyCode = request.get("verifyCode").toString();
+        String kaptchaCode = session.getAttribute("verifyCode") + "";
+        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
+            return ResponseUtil.send(CodeType.VERIFYCOODE_IS_ERROR).toJSON();
+        }
+        DataMap<UserEntity> result = userService.findUserByEmailAddress(userEntity.getEmail());
+        if(result.getCode() == 0){
+            UserEntity userEntity1 = result.getData();
+            if(userEntity1.getPassWord().equals(userEntity.getPassWord())){
+                session.setAttribute("loginUser",userEntity1.getUserName());
+                return ResponseUtil.send(CodeType.SUCCESS_STATUS).toJSON();
+            }else{
+                return ResponseUtil.send(CodeType.PASSWORD_ERROR).toJSON();
+            }
+
+        }else {
+            System.out.println("user null");
+            return ResponseUtil.send(CodeType.USER_NULL).toJSON();
+        }
+    }
+
+
+
+
+    @RequestMapping("/user/addFriend")
+    String addFriend(@RequestParam("friendName") String friendName,HttpSession session){
+        String masterUser = session.getAttribute("loginUser").toString();
+        DataMap dataMap  = userService.findFriend(friendName,masterUser);
+        if(dataMap.getCode()==1){
+            return JsonResult.fail(CodeType.FRIEND_IS_EXIST.getMessage(),CodeType.FRIEND_IS_EXIST.getCode()).toJSON();
+        }
+
+        if(dataMap.getCode() == CodeType.USERNAME_IS_NULL.getCode()){
+            return JsonResult.fail(CodeType.USERNAME_IS_NULL.getMessage(),CodeType.USERNAME_IS_NULL.getCode()).toJSON();
+        }
+
+        userService.addFriend(friendName,masterUser);
+
+        return JsonResult.success().toJSON();
+    }
+
+    @RequestMapping("/user/index")
+    @ResponseBody
+    public String returnUserPage(HttpSession session){
+        String userName = session.getAttribute("loginUser").toString();
+        DataMap result = userService.findUserByUserName(userName);
+        return JsonResult.build(result).toJSON();
+
     }
 }

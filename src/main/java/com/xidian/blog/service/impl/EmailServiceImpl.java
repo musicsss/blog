@@ -1,6 +1,10 @@
 package com.xidian.blog.service.impl;
 
+import com.xidian.blog.constant.CodeType;
+import com.xidian.blog.dao.UserMapper;
+import com.xidian.blog.entity.UserEntity;
 import com.xidian.blog.service.EmailService;
+import com.xidian.blog.utils.DataMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
@@ -18,6 +22,9 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     JavaMailSenderImpl mailSender;
 
+    @Autowired
+    UserMapper userMapper;
+
     @Value("${spring.mail.username}")
     private String sender;
 
@@ -34,5 +41,23 @@ public class EmailServiceImpl implements EmailService {
         message.setTo(receiver);
         message.setFrom(sender);
         mailSender.send(message);
+    }
+
+    @Override
+    public DataMap isAUserByEmail(String emailAddress) {
+        UserEntity userEntity = userMapper.findUserByEmailAddress(emailAddress);
+        System.out.println(userEntity);
+        try{
+            if(null == userEntity.getUserName()|| "" == userEntity.getUserName()){
+
+                return DataMap.fail(CodeType.USER_NULL);
+            }
+        }catch (Exception e){
+            return DataMap.fail(CodeType.USER_NULL);
+        }
+
+
+        return DataMap.success(CodeType.SUCCESS_STATUS);
+
     }
 }

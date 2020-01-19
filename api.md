@@ -1,5 +1,5 @@
-##用户
-###登录
+## 用户
+### 登录
 * URL：/login
 * METHOD:POST
 * REQUEST:
@@ -17,7 +17,7 @@
   "message":"success"
 }
 ```
-###增加用户
+### 增加用户
 * URL:/user/addUser
 * METHOD:POST
 * REQUEST:
@@ -43,7 +43,7 @@
 }
 ```
 
-###修改用户
+### 修改用户
 * URL:/user/addUser
 * METHOD:POST
 * REQUEST:
@@ -70,7 +70,7 @@
 }
 ```
 
-##文章列表
+## 文章列表
 * URL:/aticle/list
 * METHOD:GET
 * REQUEST:
@@ -99,7 +99,7 @@
 }
 ```
 
-###获取验证码
+### 获取验证码
 * URL:/common/kaptcha
 * METHOD:POST
 * REQUEST:
@@ -117,7 +117,7 @@
 ```
 返回图片
 
-###发送邮件验证码
+### 发送邮件验证码
 * URL:/common/email
 * METHOD:POST
 * REQUEST

@@ -19,7 +19,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         if(null == request.getSession().getAttribute("loginUser")){
             request.getSession().setAttribute("errorMsg", "请登陆");
-            response.sendRedirect(request.getContextPath() + "/login");
+            response.sendRedirect(request.getContextPath() + "/page/login.html");
             return false;
         }else {
             request.getSession().removeAttribute("errorMsg");

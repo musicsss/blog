@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+     <![endif]-->
+    <title>Title</title>
+    <style>
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #eee;
+        }
+
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <label for="emailAddress" class="sr-only">Email address</label>
+            <input type="email" id="emailAddress" class="form-control" placeholder="Email address" required autofocus>
+            <label for="passWord" class="sr-only">Password</label>
+            <input type="password" id="passWord" class="form-control" placeholder="Password" required>
+            <label for="verifyCode" class="sr-only">VerifyCode</label>
+            <input type="text" id="verifyCode" class="form-control" placeholder="VerifyCode" required>
+            <div class="img-rounded">
+               <img src="/common/kaptcha" onclick="this.src='/common/kaptcha?d='+new Date()*1">
+            </div>
+            <input type="button" class="btn btn-lg btn-primary btn-block" onclick="signIn()" id="sign_in" value="Sign in">Sign in</input>
+        </form>
+
+    </div>
+<script>
+function signIn() {
+    let userInfo =  {"emailAddress":$('#emailAddress').val(),"passWord":$('#passWord').val(),"verifyCode":$('#verifyCode').val()};
+
+    $.ajax({
+        url:'/user/loginByEmail',
+        data:JSON.stringify(userInfo),
+        type:'POST',
+        dataType:'json',
+        contentType:'application/json;charset=UTF-8',
+
+
+
+        success:(res) => {
+            if(res.status == 0){
+                location.replace("/page/index.html")
+            }else{
+                console.log(res);
+                alert(res.message);
+            }
+        },
+        error:(e,xhr,opt) => {
+            console.log(opt.url+":" + xhr.status + xhr.statusText)
+        }
+    })
+}
+</script>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../dist/js/bootstrap.min.js"></script>
+</body>
+</html>

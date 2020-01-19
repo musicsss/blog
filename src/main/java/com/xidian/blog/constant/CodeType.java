@@ -12,13 +12,19 @@ public enum CodeType {
      */
     SUCCESS_STATUS(0, "成功"),
     PHONE_EXIST(903, "手机号存在"),
-    USER_NULL(006,"用户不存在"),
-    PASSWORD_ERROR(001,"密码错误"),
-    USERNAME_IS_NULL(002,"用户名为空"),
-    PASSWORD_IS_NULL(003,"密码为空"),
-    VERIFYCOODE_IS_NULL(004,"验证码为空"),
+    USER_NULL(6,"用户不存在"),
+    PASSWORD_ERROR(1,"密码错误"),
+    USERNAME_IS_NULL(2,"用户名为空"),
+    PASSWORD_IS_NULL(3,"密码为空"),
+    VERIFYCOODE_IS_NULL(4,"验证码为空"),
     NOT_FOUND(404,"该页面不存在"),
-    VERIFYCOODE_IS_ERROR(005,"验证码错误"),
+    VERIFYCOODE_IS_ERROR(5,"验证码错误"),
+    FRIEND_IS_EXIST(6,"该用户已在好友列表中"),
+    ERROR_NOT_FOUND(7,"未知错误，请联系管理员"),
+    VERIFYCODE_NOT_SET(8,"用户未设置验证码或验证码已过期"),
+    VERIFYCODE_IS_EXPIRED(9,"验证码已过期"),
+    VERIFYCODE_IS_EXIST(10,"验证码已存在"),
+    USER_IS_EXIST(11,"用户已存在");
     ;
 
     private int code;

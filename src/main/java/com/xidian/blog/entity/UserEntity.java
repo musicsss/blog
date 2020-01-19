@@ -1,14 +1,19 @@
 package com.xidian.blog.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 米
  * @date 2020/1/16
  */
-public class UserEntity {
+public class UserEntity implements  Serializable {
 
 
     private long userId;
@@ -21,7 +26,7 @@ public class UserEntity {
     private String trueName;
     private String birthday;
     private String email;
-    private String personnalBrief;
+    private String personalBrief;
     private String avatarImgUrl;
     private String address;
     private Byte isDeleted;
@@ -29,6 +34,8 @@ public class UserEntity {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
+
+    private List<RoleEntity> authorities;
 
     public long getUserId() {
         return userId;
@@ -94,12 +101,12 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getPersonnalBrief() {
-        return personnalBrief;
+    public String getPersonalBrief() {
+        return personalBrief;
     }
 
-    public void setPersonnalBrief(String personnalBrief) {
-        this.personnalBrief = personnalBrief;
+    public void setPersonalBrief(String personalBrief) {
+        this.personalBrief = personalBrief;
     }
 
     public String getAvatarImgUrl() {
@@ -156,7 +163,7 @@ public class UserEntity {
         stringBuilder.append(", trueName=").append(trueName);
         stringBuilder.append(", birthday=").append(birthday);
         stringBuilder.append(", email=").append(email);
-        stringBuilder.append(", personnalBrief=").append(personnalBrief);
+        stringBuilder.append(", personalBrief=").append(personalBrief);
         stringBuilder.append(", avatarImgUrl=").append(avatarImgUrl);
         stringBuilder.append(", address=").append(address);
         stringBuilder.append(", isDeleted=").append(isDeleted);
@@ -168,4 +175,5 @@ public class UserEntity {
 
 
     }
+
 }

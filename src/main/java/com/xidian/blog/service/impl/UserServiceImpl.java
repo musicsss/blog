@@ -5,7 +5,6 @@ import com.xidian.blog.dao.UserMapper;
 import com.xidian.blog.entity.UserEntity;
 import com.xidian.blog.service.UserService;
 import com.xidian.blog.utils.DataMap;
-import com.xidian.blog.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +43,37 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        userMapper.save(userEntity);
+        userMapper.saveUser(userEntity);
         return true;
+    }
+
+    @Override
+    public void addFriend(String friendName, String masterUser) {
+
+    }
+
+    @Override
+    public DataMap findFriend(String friendName, String masterUser) {
+        return null;
+    }
+
+    @Override
+    public DataMap<UserEntity> findUserByEmailAddress(String emailAddress) {
+        UserEntity userEntity = userMapper.findUserByEmailAddress(emailAddress);
+        DataMap<UserEntity> dataMap = DataMap.success();
+        dataMap.setCode(CodeType.SUCCESS_STATUS.getCode());
+        dataMap.message(CodeType.SUCCESS_STATUS.getMessage());
+        dataMap.setData(userEntity);
+        System.out.println(userEntity.toString());
+        return dataMap;
+    }
+
+    @Override
+    public DataMap findUserByUserName(String userName) {
+        UserEntity userEntity = userMapper.findUserByUserName(userName);
+        if(null == userEntity){
+            return DataMap.fail(CodeType.USER_NULL);
+        }
+        return DataMap.success(CodeType.SUCCESS_STATUS).setData(userEntity);
     }
 }

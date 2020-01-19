@@ -1,6 +1,7 @@
 package com.xidian.blog.dao;
 
 import com.xidian.blog.entity.UserEntity;
+import com.xidian.blog.utils.DataMap;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,22 @@ public interface UserMapper {
     UserEntity getUsernameAndRolesByUserName(@Param("userName") String userName);
 
 
-    @Insert(",insert into user(phone,userName,passWord) values(#{phone},#{userName},#{passWord})")
-    void save(UserEntity userEntity);
+    @Insert("insert into user(userName,passWord,emailAddress)" +
+            "values(#{userName},#{passWord},#{email})")
+    void saveUser(UserEntity userEntity);
+
+    @Select("select * from user where emailAddress = #{emailAddress}")
+    @Results({
+            @Result(column = "userName",property = "userName"),
+            @Result(column = "passWord",property = "passWord"),
+    })
+    /**
+     * 输入用户邮件地址，返回该用户实体类
+     * @Param emailAddress email address
+     * @Return com.xidian.blog.entity.UserEntity 用户实体类
+     */
+    UserEntity findUserByEmailAddress(String emailAddress);
+
+    @Select("select * from user where userName = #{userName}")
+    UserEntity findUserByUserName(String userName);
 }

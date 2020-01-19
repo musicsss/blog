@@ -11,7 +11,7 @@ public class VerifyEntity {
 
     private String userName;
 
-    private int code;
+    private String code;
 
     private  Date dateEnterd;
 
@@ -37,11 +37,11 @@ public class VerifyEntity {
         this.userName = userName;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -75,5 +75,18 @@ public class VerifyEntity {
 
     public void setDateTimesModified(Date dateTimesModified) {
         this.dateTimesModified = dateTimesModified;
+    }
+
+    @Override
+    public String toString() {
+        return "VerifyEntity{" +
+                "verifyId=" + verifyId +
+                ", userName='" + userName + '\'' +
+                ", code='" + code + '\'' +
+                ", dateEnterd=" + dateEnterd +
+                ", times=" + times +
+                ", dateCodeModified=" + dateCodeModified +
+                ", dateTimesModified=" + dateTimesModified +
+                '}';
     }
 }
