@@ -10,5 +10,13 @@ import java.util.List;
  * @date 2020/1/20
  */
 public interface ArticleService {
-    DataMap getArticleListByUserName(String userName, int limit);
+    DataMap getArticleListByUserName(String userName, int limit,int articleStatus);
+
+    DataMap addArticle(ArticleEntity articleEntity);
+
+    int findUserByArticleId(int articleId);
+
+    ArticleEntity getArticleEntityByArticleId(int articleId);
+
+    DataMap updateArticleStatus(int articleId, int articleStatus);
 }

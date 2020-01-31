@@ -18,6 +18,15 @@ public class ArticleEntity {
     private String articleInfo;
     private int articleReadTimes;
     private int articleMasterId;
+    private int articleStatus;
+
+    public int getArticleStatus() {
+        return articleStatus;
+    }
+
+    public void setArticleStatus(int articleStatus) {
+        this.articleStatus = articleStatus;
+    }
 
     public int getArticleId() {
         return articleId;
@@ -97,6 +106,7 @@ public class ArticleEntity {
         stringBuilder.append(", articleInfo=").append(articleInfo);
         stringBuilder.append(", articleReadTimes=").append(articleReadTimes);
         stringBuilder.append(", articleMasterId=").append(articleMasterId);
+        stringBuilder.append(", articleStatus=").append(articleStatus);
         stringBuilder.append("]");
 
         return stringBuilder.toString();

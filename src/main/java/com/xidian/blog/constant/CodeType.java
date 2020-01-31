@@ -24,7 +24,10 @@ public enum CodeType {
     VERIFYCODE_NOT_SET(8,"用户未设置验证码或验证码已过期"),
     VERIFYCODE_IS_EXPIRED(9,"验证码已过期"),
     VERIFYCODE_IS_EXIST(10,"验证码已存在"),
-    USER_IS_EXIST(11,"用户已存在");
+    USER_IS_EXIST(11,"用户已存在"),
+    CODE_ERROR(12,"代码指令错误"),
+    NO_PERMISSION_TO_OPERATE(13,"无权进行操作"),
+    REPEAT_OPERATE(14,"重复操作")
     ;
 
     private int code;

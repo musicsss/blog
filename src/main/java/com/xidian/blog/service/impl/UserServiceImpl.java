@@ -76,4 +76,10 @@ public class UserServiceImpl implements UserService {
         }
         return DataMap.success(CodeType.SUCCESS_STATUS).setData(userEntity);
     }
+
+    @Override
+    public DataMap findUserByUserId(int userId) {
+
+        return DataMap.success().setData(userMapper.findUserByUserId(userId));
+    }
 }

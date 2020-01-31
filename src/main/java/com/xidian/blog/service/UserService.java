@@ -30,4 +30,6 @@ public interface UserService {
     DataMap<UserEntity> findUserByEmailAddress(String emailAddress);
 
     DataMap findUserByUserName(String userName);
+
+    DataMap findUserByUserId(int userId);
 }

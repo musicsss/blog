@@ -50,4 +50,7 @@ public interface UserMapper {
 
     @Select("select * from user where userName = #{userName}")
     UserEntity findUserByUserName(String userName);
+
+    @Select("select * from user where userId = #{userId}")
+    UserEntity findUserByUserId(int userId);
 }
