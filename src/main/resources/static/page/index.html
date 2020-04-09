@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class=""
-</body>
-<script src="../plugins/jquery/jquery.min.js"></script>
-<script src="../dist/js/bootstrap.min.js"></script>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    </head>
+    <body>
+        <div class="areaPage">
+            <div class="totalnum">
+                <div class="allNum">
+                    <p>共计</p>
+                    <p id="total"></p>
+                </div>
+                <div class="onNum">
+                    <p>在线</p>
+                    <p id="onLine"></p>
+                </div>
+                <div class="offNum">
+                    <p>离线</p>
+                    <p id="outLine"></p>
+                </div>
+            </div>
+            <div class="numArea"></div>
+        </div>
+    </body>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $.ajax({
+            url: "data.json",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                console.log(JSON.stringify(data))
+                // 显示在线离线人数
+                $("#total").html(data.total);
+                $("#onLine").html(data.onLine);
+                $("#outLine").html(data.outLine);
+ 
+                // 各部门人数显示
+                var map = data.regions;
+                var html = "";
+                for(var key in map) {
+                    html += '<div  class="areaBottom"  ><span>' + key + '</span><span>' +
+                        map[key] + '</span></div>';
+                }
+                $(".numArea").append(html);
+            }
+        })
+    </script>
 </html>
+ 

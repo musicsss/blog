@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,7 +31,10 @@ public class ArticleServiceImpl implements ArticleService {
             return DataMap.fail(CodeType.CODE_ERROR);
         }
         List <ArticleEntity> articleEntityList = articleMapper.getArticleListByUserName(userName,limit,articleStatus);
-        return DataMap.success().setData(articleEntityList);
+        System.out.println(articleEntityList.isEmpty());
+        DataMap dataMap = DataMap.success().setData(articleEntityList);
+        System.out.println(dataMap.toString());
+        return dataMap;
     }
 
     @Override
@@ -60,5 +64,11 @@ public class ArticleServiceImpl implements ArticleService {
     public DataMap updateArticleStatus(int articleId, int articleStatus) {
         articleMapper.updateArticleStatus(articleStatus,articleId);
         return DataMap.success(CodeType.SUCCESS_STATUS);
+    }
+
+    @Override
+    public List getArticleType() {
+        System.out.println( articleMapper.getArticleType());
+        return articleMapper.getArticleType();
     }
 }

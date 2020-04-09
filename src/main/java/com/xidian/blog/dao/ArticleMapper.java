@@ -2,9 +2,11 @@ package com.xidian.blog.dao;
 
 import com.xidian.blog.entity.ArticleEntity;
 import com.xidian.blog.utils.DataMap;
+import com.xidian.blog.utils.SelectTool;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,4 +33,7 @@ public interface ArticleMapper {
 
     @Select("select articleTypeName from user_article_type where articleTypeId = #{articleTypeId}")
     String getArticleTypeNameByArticleTypeId(int articleTypeId);
+
+    @Select("select articleTypeId,articleTypeName from user_article_type ")
+    List<SelectTool> getArticleType();
 }

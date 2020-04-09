@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xidian.blog.dao.BlogGreetingMapper">
+    <resultMap id="BaseResultMap" type="com.xidian.blog.entity.BlogGreetingEntity">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="greeting_type" property="greetingType" jdbcType="INTEGER"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,greeting_type,content,create_time,update_time,is_deleted
+    </sql>
+
+    <select id="findGreetingList" parameterType="Map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from blog_greetings where is_deleted = 0
+        order by id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalGreeting" parameterType="Map" resultType="int">
+        select count(*) from blog_greetings where is_deleted =0;
+    </select>
+
+    <select id="getGreetingByRow" parameterType="int" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from blog_greetings where is_deleted = 0 limit #{num},1
+    </select>
+
+    <insert id="insert" parameterType="com.xidian.blog.entity.BlogGreetingEntity">
+        insert into blog_greetings (content, create_time, update_time, greeting_type)
+        VALUES (#{content},#{createTime},#{updateTime},#{greetingType})
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from blog_greetings where id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.xidian.blog.entity.BlogGreetingEntity" >
+        update blog_greetings set content = #{content},update_time = #{updateTime},greeting_type = #{greetingType} where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="int">
+        update blog_greetings set is_deleted = 1 where id = #{id}
+    </update>
+
+    <update id="deleteBatch">
+        update blog_greetings
+        set is_deleted=1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>

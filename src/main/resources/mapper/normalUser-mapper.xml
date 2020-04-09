@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xidian.blog.dao.UserMapper">
+    <resultMap id="UserResult" type="com.xidian.blog.entity.UserEntity">
+        <id property="userId" column="userId" jdbcType="BIGINT"/>
+        <result property="userName" column="userName" jdbcType="VARCHAR"/>
+        <result property="passWord" column="passWord" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="TINYINT"/>
+        <result property="createTime" column="createTime" jdbcType="DATE"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="emailAddress" column="emailAddress" jdbcType="DATE"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="lockedFlag" column="lockedFlag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_information">
+        userId,userName,passWord ,phone,gender,createTime,birthday,emailAddress,address,lockedFlag
+    </sql>
+    <!--查找用户列表 -->
+    <select id="findUsers" parameterType="Map" resultMap="UserResult">
+        select <include refid="base_information" />from user where isDeleted = 0 order by userId desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <!--查询用户总数 -->
+    <select id="getTotalUser" parameterType="Map" resultType="int">
+        select count(*) from user;
+    </select>
+
+</mapper>

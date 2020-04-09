@@ -2,10 +2,11 @@ package com.xidian.blog.dao;
 
 import com.xidian.blog.entity.UserEntity;
 import com.xidian.blog.utils.DataMap;
+import com.xidian.blog.utils.PageUtil;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
+    import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -53,4 +54,11 @@ public interface UserMapper {
 
     @Select("select * from user where userId = #{userId}")
     UserEntity findUserByUserId(int userId);
+
+    List<UserEntity> findUsers(PageUtil pageUtil);
+
+    int getTotalUser(PageUtil pageUtil);
+    
+
+
 }

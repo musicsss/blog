@@ -25,7 +25,7 @@ public class UserEntity implements  Serializable {
     private int gender;
     private String trueName;
     private String birthday;
-    private String email;
+    private String emailAddress;
     private String personalBrief;
     private String avatarImgUrl;
     private String address;
@@ -93,12 +93,12 @@ public class UserEntity implements  Serializable {
         this.birthday = birthday;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailAddress(String email) {
+        this.emailAddress = email;
     }
 
     public String getPersonalBrief() {
@@ -162,7 +162,7 @@ public class UserEntity implements  Serializable {
         stringBuilder.append(", gender=").append(gender);
         stringBuilder.append(", trueName=").append(trueName);
         stringBuilder.append(", birthday=").append(birthday);
-        stringBuilder.append(", email=").append(email);
+        stringBuilder.append(", email=").append(emailAddress);
         stringBuilder.append(", personalBrief=").append(personalBrief);
         stringBuilder.append(", avatarImgUrl=").append(avatarImgUrl);
         stringBuilder.append(", address=").append(address);

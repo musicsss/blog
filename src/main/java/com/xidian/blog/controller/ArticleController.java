@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,12 +37,26 @@ public class ArticleController {
 
     @RequestMapping("/article/getSimpleAticleList")
     public String getSimpleArticleList(@RequestBody Map<String,Object> request){
-        String userName = request.get("userName").toString();
-        int limit = (int)request.get("limit");
-        int status = (int)request.get("articleStatus");
-        DataMap dataMap = articleService.getArticleListByUserName(userName,limit,status);
-        System.out.println(dataMap.getData().toString());
-        return JsonResult.build(dataMap).toJSON();
+        try{
+            String userName = request.get("userName").toString();
+            int limit = (int)request.get("limit");
+            int status = (int)request.get("articleStatus");
+            DataMap dataMap = articleService.getArticleListByUserName(userName,limit,status);
+            System.out.println(dataMap.getData().toString());
+            return JsonResult.build(dataMap).toJSON();
+        }catch (NullPointerException e){
+            return JsonResult.fail().toJSON();
+        }
+
+    }
+
+    @RequestMapping("/article/getArticleType")
+    public String getArticle(){
+        List articleTypeList = articleService.getArticleType();
+
+        System.out.println(articleTypeList);
+
+        return JsonResult.build(DataMap.success().setData(articleTypeList)).toJSON();
     }
 
     @RequestMapping("/article/addArticle")
@@ -56,6 +72,8 @@ public class ArticleController {
 
         return JsonResult.build(result).toJSON();
     }
+
+
 
     @RequestMapping("/article/updateArticleStatus")
     public String updateArticleStatus(@RequestBody Map<String,Object> request,HttpSession session){

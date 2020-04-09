@@ -27,8 +27,10 @@ public class CaptchaController {
         byte[] captchaOutputStream = null;
         ByteArrayOutputStream imgOutputStream = new ByteArrayOutputStream();
         try {
+            System.out.println(captchaProducer.toString());
             //生产验证码字符串并保存到session中
             String verifyCode = captchaProducer.createText();
+            System.out.println(verifyCode.toString());
             httpServletRequest.getSession().setAttribute("verifyCode", verifyCode);
             BufferedImage challenge = captchaProducer.createImage(verifyCode);
             ImageIO.write(challenge, "jpg", imgOutputStream);
